@@ -4,14 +4,14 @@ Package.describe({
   version: '0.0.1'
 });
 
-Package.onUse(function (api) {
+Package.onUse(function(api) {
   api.use([
     'underscore',
     'templating',
     'check',
     'aldeed:simple-schema',
-    'aldeed:collection2',
-    'aldeed:autoform',
+    'aldeed:collection2@2.5.0',
+    'aldeed:autoform@5.5.0',
     'dispatch:bound-document',
     'gfk:underscore-deep'
   ]);
@@ -37,14 +37,19 @@ Package.onUse(function (api) {
   api.export('Configuration');
 });
 
-Package.onTest(function (api) {
+Package.onTest(function(api) {
   api.use('sanjo:jasmine@0.16.4');
 
   api.use([
-    'dispatch:configuration'
+    'mongo',
+    'dispatch:configuration',
+    'aldeed:simple-schema'
   ]);
 
   api.addFiles([
-    'tests.js'
+    'tests/inheritance.js'
   ]);
+  api.addFiles([
+    'tests/server-only/bulk.js'
+  ], 'server');
 });
