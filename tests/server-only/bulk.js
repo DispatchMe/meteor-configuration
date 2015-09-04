@@ -85,19 +85,12 @@ describe('getForEntities', function() {
   it('with inheritance', function() {
 
 
-    var bulk = Configuration.getForEntities([{
-      type: 'root',
-      id: this.root1Id
-    }, {
-      type: 'child',
-      id: 'random unknown id'
-    }, {
-      type: 'child',
-      id: this.child1Id
-    }, {
-      type: 'root',
-      id: this.root2Id
-    }]);
+    var bulk = Configuration.getForEntities([
+      ['root', this.root1Id],
+      ['child', 'random unknown id'],
+      ['child', this.child1Id],
+      ['root', this.root2Id]
+    ]);
 
     var root1Config = bulk[0];
     var randomChildConfig = bulk[1];
@@ -118,19 +111,12 @@ describe('getForEntities', function() {
   });
 
   it('without inheritance', function() {
-    var bulk = Configuration.getForEntities([{
-      type: 'root',
-      id: this.root1Id
-    }, {
-      type: 'child',
-      id: 'random unknown id'
-    }, {
-      type: 'child',
-      id: this.child1Id
-    }, {
-      type: 'root',
-      id: this.root2Id
-    }], {
+    var bulk = Configuration.getForEntities([
+      ['root', this.root1Id],
+      ['child', 'random unknown id'],
+      ['child', this.child1Id],
+      ['root', this.root2Id]
+    ], {
       inherit: false
     });
 
@@ -139,6 +125,7 @@ describe('getForEntities', function() {
     var child1Config = bulk[2];
     var root2Config = bulk[3];
 
+    console.log(root1Config);
     expect(bulk.length).toEqual(4);
 
     expect(root1Config.simpleProperty).toEqual('bar');
