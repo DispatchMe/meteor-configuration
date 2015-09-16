@@ -1,7 +1,7 @@
 Package.describe({
   name: 'dispatch:configuration',
   summary: 'App configuration manager with inheritance',
-  version: '0.0.1'
+  version: '0.0.2'
 });
 
 Package.onUse(function(api) {
@@ -48,8 +48,10 @@ Package.onTest(function(api) {
 
   api.addFiles([
     'tests/inheritance.js'
+
   ]);
   api.addFiles([
-    'tests/server-only/bulk.js'
+    'tests/server-only/bulk.js',
+    'tests/setSchema.js'
   ], 'server');
 });

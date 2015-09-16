@@ -11,17 +11,31 @@ First we call `Configuration.setSchema` in common (both client and server) start
 
 ```js
 Configuration.setSchema(new SimpleSchema({
-  hideAlerts: {type: Boolean, optional: true}
+  hideAlerts: {type: Boolean}
 }));
 ```
 
-For everything to work properly, you should define all your properties as optional in the schema.
+You can also call `Configuration.setSchemaForPrefix` if you want to set the schema only for a certain nested property. This is useful if you have packages that define their own configuration.
+
+```js
+Configuration.setSchemaForPrefix('myPrefix', newSimpleSchema({
+  propertyUniqueToThisPackage:{type:String}
+}));
+```
 
 Next we call `Configuration.setDefault` in server code to define the default values for all settings.
 
 ```js
 Configuration.setDefault({
   hideAlerts: false
+});
+```
+
+And later you can set the default for a prefix:
+
+```js
+Configuration.setDefaultForPrefix('myPrefix', {
+  propertyUniqueToThisPackage:'foo'
 });
 ```
 
