@@ -6,14 +6,14 @@ Package.describe({
 
 Package.onUse(function(api) {
   api.use([
-    'underscore',
-    'templating',
-    'check',
-    'aldeed:simple-schema',
+    'underscore@1.0.3',
+    'templating@1.1.1',
+    'check@1.0.5',
+    'aldeed:simple-schema@1.3.3',
     'aldeed:collection2@2.5.0',
     'aldeed:autoform@5.5.0',
-    'dispatch:bound-document',
-    'gfk:underscore-deep'
+    'dispatch:bound-document@0.0.1',
+    'gfk:underscore-deep@1.0.0'
   ]);
 
   api.imply('aldeed:simple-schema');
