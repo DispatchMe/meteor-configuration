@@ -135,7 +135,6 @@ describe('Inheritance', function() {
         }]
       },
       expectation: {
-        nested: {},
         arrayProperty: ['foo', 'bar', 'baz'],
         arrayOfObjects: [{
           foo: 'bar'
@@ -156,7 +155,6 @@ describe('Inheritance', function() {
         arrayProperty: ['a', 'b', 'c']
       },
       expectation: {
-        nested: {},
         arrayProperty: ['a', 'b', 'c'],
         arrayOfObjects: [{
           foo: 'bar'
