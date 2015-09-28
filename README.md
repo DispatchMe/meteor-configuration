@@ -1,4 +1,4 @@
-dispatch:configuration
+dispatch:configuration [![Build Status](https://travis-ci.org/DispatchMe/meteor-configuration.svg?branch=master)](https://travis-ci.org/DispatchMe/meteor-configuration)
 ===============
 
 A Meteor package that provides a simple API for working with cascading app configurations.
