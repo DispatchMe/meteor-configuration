@@ -125,7 +125,6 @@ describe('getForEntities', function() {
     var child1Config = bulk[2];
     var root2Config = bulk[3];
 
-    console.log(root1Config);
     expect(bulk.length).toEqual(4);
 
     expect(root1Config.simpleProperty).toEqual('bar');

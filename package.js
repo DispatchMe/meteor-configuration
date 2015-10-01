@@ -12,7 +12,7 @@ Package.onUse(function(api) {
     'aldeed:simple-schema@1.3.3',
     'aldeed:collection2@2.5.0',
     'aldeed:autoform@5.5.0',
-    'dispatch:bound-document@0.0.1',
+    'dispatch:bound-document@0.0.2',
     'gfk:underscore-deep@1.0.0'
   ]);
 
@@ -24,8 +24,10 @@ Package.onUse(function(api) {
   ], ['client', 'server']);
 
   api.addFiles([
+    'lib/server/server.js',
     'lib/server/publish.js',
-    'lib/server/write.js'
+    'lib/server/write.js',
+    'lib/server/methods.js',
   ], 'server');
 
   api.addFiles([
@@ -38,20 +40,20 @@ Package.onUse(function(api) {
 });
 
 Package.onTest(function(api) {
-  api.use('sanjo:jasmine@0.16.4');
+  api.use('sanjo:jasmine@0.19.0');
 
   api.use([
     'mongo',
+    'tracker',
     'dispatch:configuration',
     'aldeed:simple-schema'
   ]);
 
   api.addFiles([
     'tests/inheritance.js'
-
   ]);
   api.addFiles([
     'tests/server-only/bulk.js',
-    'tests/setSchema.js'
+    'tests/server-only/setSchema.js'
   ], 'server');
 });

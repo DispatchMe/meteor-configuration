@@ -3,7 +3,7 @@ sudo: false
 
 language: node_js
 node_js:
-  - "0.10.36"
+  - "0.10.40"
 
 # Since sudo isn't possible anymore (for now), meteor can't add a link to itself to /usr/local/bin, so you'll have to add the meteor installation folder to the PATH yourself.
 before_install:

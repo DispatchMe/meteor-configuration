@@ -39,20 +39,43 @@ Configuration.setDefaultForPrefix('myPrefix', {
 });
 ```
 
-Now when we want to get the settings for user "ABC", we can do this in either client or server code:
+Now when we want to get the settings for user "ABC", we can do this:
+
+*server code (synchronous)*
 
 ```js
 var shouldHideAlerts = Configuration.user('ABC').hideAlerts;
 ```
 
-And to change the user's settings (overriding the defaults) in client or server code, you only have to set the property and the database will be updated:
+*client code (asynchronous)*
+
+```js
+Configuration.user('ABC', function (error, config) {
+  if (error) throw error;
+  var shouldHideAlerts = config.hideAlerts;
+});
+```
+
+And to change the user's settings (overriding the defaults), you only have to set the property and the database will be updated:
+
+*server code (synchronous)*
 
 ```js
 Configuration.user('ABC').hideAlerts = true;
 ```
 
+*client or server code (asynchronous)*
+
+```js
+Configuration.user('ABC', function (error, config) {
+  if (error) throw error;
+  config.hideAlerts = true;
+});
+```
+
 This relies on the `dispatch:bound-document` package to work. You can't set object properties or properties within arrays with this method. If you need to do so, you can call `Configuration.setForEntity` to replace the whole user config with a new one:
 
+*client or server code*
 
 ```js
 Configuration.setForEntity('user', 'ABC', {
@@ -63,6 +86,8 @@ Configuration.setForEntity('user', 'ABC', {
 ## A Complex Example
 
 There is a default `user` entity type, but you can override it to add additional layers of inheritance. Call `Configuration.addEntityType` in common code for each entity type, including `user`. Here is an example where users inherit their configuration from the `organization` they belong to.
+
+*common code*
 
 ```js
 Configuration.addEntityType('organization', {
@@ -116,13 +141,15 @@ There are lots of possibilities. You could do role-based configuration where use
 ## Configuration.addEntityType Options
 
  * `inherit` A function that returns `[entityType, entityId]` to inherit from or "default". Receives the entityId as first argument and any options you pass to `getForEntity` are provided as the second argument, allowing you to do complex inheritance based on calling context if necessary. For inheriting from the default configuration, you can set this to the string "default" instead of a function.
- * `write` A function that receives the `userId` and `entityId` and returns `true` or `false` to allow or disallow updating it from the client
- * `publish` A function that receives the `userId` and returns the `entityId` or array of entityIds that should be published for this type, or returns `undefined` for none
+ * `write` A function that receives the `userId` and `entityId` and returns `true` or `false` to allow or disallow updating it from the client. Only called from server code.
+ * `publish` A function that receives the `userId` and returns the `entityId` or array of entityIds that should be published for this type, or returns `undefined` for none. Only called from server code.
  * `cannotOverride` An array of fields in the schema that cannot be overridden (must inherit) for this entity type
 
 ## Security for Editing Defaults From Client
 
 To allow calling `Configuration.setDefault` from client code for some users, define a role checking function using `Configuration.canEditDefault` in server code. This is like the `write` function for the default entity.
+
+*server code*
 
 ```js
 Configuration.canEditDefault(function (userId) {
