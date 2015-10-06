@@ -106,6 +106,7 @@ describe('Inheritance', function() {
 
   it('should use defaults', function(done) {
     var self = this;
+
     Configuration.setDefault({
       simpleProperty: 'foo',
       nested: {
@@ -115,88 +116,107 @@ describe('Inheritance', function() {
       if (err) {
         return done(err);
       }
-      var config = Configuration.getForEntity('child', self.childId);
-      expect(config.simpleProperty).toEqual('foo');
-      expect(config.nested.property).toEqual(10);
-      done();
+
+      var config;
+      function checkConfig() {
+        expect(config).toBeDefined();
+        expect(config.simpleProperty).toEqual('foo');
+        expect(config.nested.property).toEqual(10);
+        done();
+      }
+
+      if (Meteor.isServer) {
+        config = Configuration.getForEntity('child', self.childId);
+        checkConfig();
+      } else {
+        Configuration.getForEntity('child', self.childId, function (error, result) {
+          if (err) {
+            return done(err);
+          }
+
+          config = result;
+          checkConfig();
+        });
+      }
     });
-
-
   });
 
-  describe('parameters', function() {
-    var params = [{
-      root: {
-        arrayProperty: ['foo', 'bar', 'baz'],
-        arrayOfObjects: [{
-          foo: 'bar'
-        }, {
-          foo: 'baz'
-        }]
-      },
-      expectation: {
-        arrayProperty: ['foo', 'bar', 'baz'],
-        arrayOfObjects: [{
-          foo: 'bar'
-        }, {
-          foo: 'baz'
-        }]
-      }
-    }, {
-      root: {
-        arrayProperty: ['foo', 'bar', 'baz'],
-        arrayOfObjects: [{
-          foo: 'bar'
-        }, {
-          foo: 'baz'
-        }]
-      },
-      child: {
-        arrayProperty: ['a', 'b', 'c']
-      },
-      expectation: {
-        arrayProperty: ['a', 'b', 'c'],
-        arrayOfObjects: [{
-          foo: 'bar'
-        }, {
-          foo: 'baz'
-        }]
-      }
-    }];
+  if (Meteor.isServer) {
 
-    params.forEach(function(param, idx) {
-      it('should work with param #' + (idx + 1).toString(), function() {
-        if (param.default) {
-          Configuration.setDefault(param.default);
+    describe('parameters', function() {
+      var params = [{
+        root: {
+          arrayProperty: ['foo', 'bar', 'baz'],
+          arrayOfObjects: [{
+            foo: 'bar'
+          }, {
+            foo: 'baz'
+          }]
+        },
+        expectation: {
+          arrayProperty: ['foo', 'bar', 'baz'],
+          arrayOfObjects: [{
+            foo: 'bar'
+          }, {
+            foo: 'baz'
+          }]
         }
-
-        if (param.root) {
-          Configuration.setForEntity('root', this.rootId, param.root);
+      }, {
+        root: {
+          arrayProperty: ['foo', 'bar', 'baz'],
+          arrayOfObjects: [{
+            foo: 'bar'
+          }, {
+            foo: 'baz'
+          }]
+        },
+        child: {
+          arrayProperty: ['a', 'b', 'c']
+        },
+        expectation: {
+          arrayProperty: ['a', 'b', 'c'],
+          arrayOfObjects: [{
+            foo: 'bar'
+          }, {
+            foo: 'baz'
+          }]
         }
+      }];
 
-        if (param.child) {
-          Configuration.setForEntity('child', this.childId, param.child);
-        }
+      params.forEach(function(param, idx) {
+        it('should work with param #' + (idx + 1).toString(), function() {
+          if (param.default) {
+            Configuration.setDefault(param.default);
+          }
 
-        if (param.grandchild) {
-          Configuration.setForEntity('grandchild', this.grandchildId, param.grandchild);
-        }
+          if (param.root) {
+            Configuration.setForEntity('root', this.rootId, param.root);
+          }
 
-        // Make sure grandchild is expected
-        if (param.grandchild) {
-          expect(JSON.stringify(Configuration.getForEntity('grandchild', this.grandchildId)))
-            .toEqual(JSON.stringify(param.expectation));
-        } else {
-          // Make sure the child and the grandchild look the same, since the grandchild has no custom config
-          expect(JSON.stringify(Configuration.getForEntity('child', this.childId)))
-            .toEqual(JSON.stringify(param.expectation));
-          expect(JSON.stringify(Configuration.getForEntity('grandchild', this.grandchildId)))
-            .toEqual(JSON.stringify(param.expectation));
-        }
+          if (param.child) {
+            Configuration.setForEntity('child', this.childId, param.child);
+          }
 
+          if (param.grandchild) {
+            Configuration.setForEntity('grandchild', this.grandchildId, param.grandchild);
+          }
+
+          // Make sure grandchild is expected
+          if (param.grandchild) {
+            expect(JSON.stringify(Configuration.getForEntity('grandchild', this.grandchildId)))
+              .toEqual(JSON.stringify(param.expectation));
+          } else {
+            // Make sure the child and the grandchild look the same, since the grandchild has no custom config
+            expect(JSON.stringify(Configuration.getForEntity('child', this.childId)))
+              .toEqual(JSON.stringify(param.expectation));
+            expect(JSON.stringify(Configuration.getForEntity('grandchild', this.grandchildId)))
+              .toEqual(JSON.stringify(param.expectation));
+          }
+
+        });
       });
     });
-  });
 
+  }
 
 });
