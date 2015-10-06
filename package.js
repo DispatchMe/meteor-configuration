@@ -1,7 +1,7 @@
 Package.describe({
   name: 'dispatch:configuration',
   summary: 'App configuration manager with inheritance',
-  version: '0.0.6'
+  version: '0.0.7'
 });
 
 Package.onUse(function(api) {
