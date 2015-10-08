@@ -11,7 +11,6 @@ Package.onUse(function(api) {
     'check@1.0.5',
     'aldeed:simple-schema@1.3.3',
     'aldeed:collection2@2.5.0',
-    'aldeed:autoform@5.5.0',
     'dispatch:bound-document@0.0.2',
     'gfk:underscore-deep@1.0.0'
   ]);
@@ -31,9 +30,7 @@ Package.onUse(function(api) {
   ], 'server');
 
   api.addFiles([
-    'lib/client/client.js',
-    'lib/client/editForm.html',
-    'lib/client/editForm.js'
+    'lib/client/client.js'
   ], 'client');
 
   api.export('Configuration');

@@ -160,18 +160,6 @@ Configuration.canEditDefault(function (userId) {
 });
 ```
 
-## Edit Form
-
-You can render a form for creating or updating entity configuration like this:
-
-```
-{{> configurationEditForm entityType="user" entityId=entityId}}
-```
-
-To render a form for editing defaults, specify `entityType="default"`, specify no `entityId`, and be sure that you have defined a security function using `Configuration.canEditDefault`.
-
-This uses a quickForm. Refer to [aldeed:autoform](https://github.com/aldeed/meteor-autoform) for details.
-
 ## Limitations
 
 Currently all entity IDs must be strings and must not contain the underscore character.
