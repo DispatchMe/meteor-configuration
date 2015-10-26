@@ -14,4 +14,4 @@ before_install:
 
 script: 
   - "jshint ."
-  - "velocity test-package ./ --ci"
+  - "./run-tests.sh"
