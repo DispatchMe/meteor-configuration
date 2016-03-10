@@ -100,48 +100,23 @@ describe('Inheritance', function() {
     } else {
       setup();
     }
-
-
-  });
-
-  it('should use defaults', function(done) {
-    var self = this;
-
-    Configuration.setDefault({
-      simpleProperty: 'foo',
-      nested: {
-        property: 10
-      }
-    }, function(err) {
-      if (err) {
-        return done(err);
-      }
-
-      var config;
-      function checkConfig() {
-        expect(config).toBeDefined();
-        expect(config.simpleProperty).toEqual('foo');
-        expect(config.nested.property).toEqual(10);
-        done();
-      }
-
-      if (Meteor.isServer) {
-        config = Configuration.getForEntity('child', self.childId);
-        checkConfig();
-      } else {
-        Configuration.getForEntity('child', self.childId, function (error, result) {
-          if (err) {
-            return done(err);
-          }
-
-          config = result;
-          checkConfig();
-        });
-      }
-    });
   });
 
   if (Meteor.isServer) {
+    it('should use defaults', function() {
+      Configuration.setDefault({
+        simpleProperty: 'foo',
+        nested: {
+          property: 10,
+        },
+      });
+
+      var config = Configuration.getForEntity('child', this.childId);
+
+      expect(config).toBeDefined();
+      expect(config.simpleProperty).toEqual('foo');
+      expect(config.nested.property).toEqual(10);
+    });
 
     describe('parameters', function() {
       var params = [{
@@ -217,6 +192,29 @@ describe('Inheritance', function() {
       });
     });
 
+  } else { // If client
+    it('should use defaults', function(done) {
+      var childId = this.childId;
+
+      Configuration.setDefault({
+        simpleProperty: 'foo',
+        nested: {
+          property: 10
+        }
+      }, function (err) {
+        if (err) return done(err);
+
+        Configuration.getForEntity('child', childId, function (error, config) {
+          if (err) return done(err);
+
+          expect(config).toBeDefined();
+          expect(config.simpleProperty).toEqual('foo');
+          expect(config.nested.property).toEqual(10);
+          done();
+        });
+      });
+
+    });
   }
 
 });

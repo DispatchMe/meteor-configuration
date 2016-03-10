@@ -11,7 +11,6 @@ describe('setSchema', function() {
       }
     });
 
-
     expect(function() {
       Configuration.Collection.insert({
         _id: '1',

@@ -8,8 +8,6 @@ var childCollection = new Mongo.Collection('children', {
   connection: null
 });
 
-
-
 describe('getForEntities', function() {
   beforeEach(function() {
     // Something about the way velocity runs the tests make this compete with the different
@@ -24,7 +22,6 @@ describe('getForEntities', function() {
       arrayProperty: {
         type: [String],
       },
-
       'nested.property': {
         type: Number,
       },
@@ -37,7 +34,6 @@ describe('getForEntities', function() {
       'arrayOfObjects.$.foo': {
         type: String,
       }
-
     }));
 
     Configuration.addEntityType('root', {

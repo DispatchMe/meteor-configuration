@@ -6,6 +6,7 @@ Package.describe({
 
 Package.onUse(function(api) {
   api.use([
+    'ecmascript',
     'underscore@1.0.3',
     'templating@1.1.1',
     'check@1.0.5',
@@ -14,6 +15,10 @@ Package.onUse(function(api) {
     'dispatch:bound-document@0.0.2',
     'gfk:underscore-deep@1.0.0'
   ]);
+
+  api.use([
+    'raix:eventemitter@0.1.2',
+  ], 'server');
 
   api.imply('aldeed:simple-schema');
 
@@ -40,6 +45,8 @@ Package.onTest(function(api) {
   api.use('sanjo:jasmine@0.19.0');
 
   api.use([
+    'accounts-base',
+    'ecmascript',
     'mongo',
     'tracker',
     'dispatch:configuration',
@@ -51,6 +58,7 @@ Package.onTest(function(api) {
   ]);
   api.addFiles([
     'tests/server-only/bulk.js',
-    'tests/server-only/setSchema.js'
+    'tests/server-only/setSchema.js',
+    'tests/server-only/afterUpdate.js',
   ], 'server');
 });
