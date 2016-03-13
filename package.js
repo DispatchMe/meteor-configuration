@@ -1,12 +1,12 @@
 Package.describe({
   name: 'dispatch:configuration',
   summary: 'App configuration manager with inheritance',
-  version: '0.1.7'
+  version: '0.2.0'
 });
 
 Package.onUse(function(api) {
   api.use([
-    'ecmascript',
+    'ecmascript@0.1.6',
     'underscore@1.0.3',
     'templating@1.1.1',
     'check@1.0.5',
