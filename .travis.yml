@@ -7,11 +7,9 @@ node_js:
 
 # Since sudo isn't possible anymore (for now), meteor can't add a link to itself to /usr/local/bin, so you'll have to add the meteor installation folder to the PATH yourself.
 before_install:
-  - "curl https://install.meteor.com | /bin/sh"
+  - curl https://install.meteor.com | /bin/sh
   - export PATH="$HOME/.meteor:$PATH"
-  - "npm install -g velocity-cli@0.3.3"
-  - "npm install -g jshint"
+  - npm install -g velocity-cli@0.3.3
 
-script: 
-  - "jshint ."
-  - "./run-tests.sh"
+script:
+  - ./run-tests.sh

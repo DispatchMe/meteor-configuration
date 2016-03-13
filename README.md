@@ -160,6 +160,16 @@ Configuration.canEditDefault(function (userId) {
 });
 ```
 
+### Audit Trail
+
+After every successful configuration update, `Configuration` will emit an "afterUpdate" event in server code. You can use this to log an audit trail.
+
+```js
+Configuration.on('afterUpdate', (info) => {
+  log(info);
+});
+```
+
 ## Limitations
 
 Currently all entity IDs must be strings and must not contain the underscore character.
