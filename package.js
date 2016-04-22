@@ -11,7 +11,7 @@ Package.onUse(function(api) {
     'templating@1.1.1',
     'check@1.0.5',
     'aldeed:simple-schema@1.3.3',
-    'aldeed:collection2@2.5.0',
+    'aldeed:collection2@2.9.1',
     'dispatch:bound-document@0.0.2',
     'gfk:underscore-deep@1.0.0'
   ]);
